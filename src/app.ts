@@ -4,6 +4,7 @@ import { notFound } from "./middleware/notFound";
 import { errorHandler } from "./middleware/errorHandler";
 import { connectDB } from "./database/connectDB";
 import { router as productsRoute } from "./routes/products";
+import "express-async-errors";
 
 dotenv.config();
 const app = express();
