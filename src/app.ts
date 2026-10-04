@@ -22,7 +22,10 @@ app.use(errorHandler);
 
 const start = async () => {
   try {
-    await connectDB(process.env.DB_CONN_STRING as string);
+    await connectDB(
+      process.env.DB_CONN_STRING as string,
+      process.env.DB_NAME as string,
+    );
     app.listen(port, () => {
       console.log(`Server is listening on port ${port}`);
     });
