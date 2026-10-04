@@ -1,0 +1,31 @@
+{
+  "name": "store-api",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "dev": "tsx watch src/app.ts",
+    "build": "tsc",
+    "start": "node dist/app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.4",
+    "nodemon": "^3.1.14",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "dotenv": "^18.0.5",
+    "express": "^4.22.3",
+    "express-async-errors": "^3.1.1",
+    "mongoose": "^9.10.4"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true
+  }
+}
