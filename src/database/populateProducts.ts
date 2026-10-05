@@ -14,6 +14,7 @@ const populateProducts = async () => {
     await Product.deleteMany(); // Clear existing products
     await Product.insertMany(jsonProducts); // Insert new products
     console.log("Success at populating products");
+    process.exit(0); // Exit the process successfully
   } catch (error) {
     console.error("Error connecting to MongoDB:", error);
     process.exit(1); // Exit the process with an error code
