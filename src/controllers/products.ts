@@ -1,12 +1,13 @@
 import type { Request, Response } from "express";
 import { Product } from "../models/products";
 import { COMPANIES } from "../types/product";
-import type { ProductFilter, Company } from "../types/product";
+import type { ProductFilter, Company, Options } from "../types/product";
 
 const getAllProductsStatic = async (_req: Request, res: Response) => {
   const search = "wooden";
   const products = await Product.find({
     name: { $regex: search, $options: "i" },
+    price: { $lt: 30 },
   })
     .sort("name -price")
     .select("name price")
@@ -18,7 +19,7 @@ const getAllProductsStatic = async (_req: Request, res: Response) => {
 };
 
 const getAllProducts = async (req: Request, res: Response) => {
-  const { featured, company, name, sort, select, limit, skip } = req.query;
+  const { featured, company, name, sort, select, numericFilters } = req.query;
 
   if (featured && featured !== "true" && featured !== "false") {
     return res.status(400).json({
@@ -46,6 +47,32 @@ const getAllProducts = async (req: Request, res: Response) => {
 
   if (name) {
     filter.name = { $regex: name as string, $options: "i" };
+  }
+
+  if (numericFilters) {
+    const operatorMap = {
+      ">": "$gt",
+      ">=": "$gte",
+      "=": "$eq",
+      "<": "$lt",
+      "<=": "$lte",
+    };
+    const regEx = /\b(>|>=|=|<|<=)\b/g;
+    let customFilter = (numericFilters as string).replace(
+      regEx,
+      (match) => `-${operatorMap[match as keyof typeof operatorMap]}-`,
+    );
+    console.log("numericFilters:", customFilter);
+    const options = ["price", "rating"];
+    customFilter.split(",").forEach((item) => {
+      const [field, operator, value] = item.split("-");
+      if (options.includes(field as string) && operator && value) {
+        filter[field as Options] = {
+          [operator as keyof typeof operatorMap]: Number(value),
+        };
+      }
+    });
+    console.log("Final Filter Object:", filter);
   }
 
   let result = Product.find(filter);
