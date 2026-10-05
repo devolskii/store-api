@@ -1,6 +1,6 @@
 # Store API
 
-A simple product search API built with **Express**, **Mongoose**, and **TypeScript**. Part of the Node / Express course (`04-store-api`).
+A simple product search API built with **Express**, **Mongoose**, and **TypeScript**. Part of the Node / Express course (`04-store-api`) by John Smilga.
 
 Provides filtering, sorting, field selection, numeric filters, and pagination over a `products` collection.
 
@@ -132,15 +132,15 @@ Response:
 
 Full query API. All params are optional.
 
-| Param | Example | Description |
-|---|---|---|
-| `featured` | `?featured=true` | Must be `true` or `false`, else 400 |
-| `company` | `?company=ikea` | One of `ikea`, `liddy`, `caressa`, `marcos`, else 400 |
-| `name` | `?name=table` | Case-insensitive regex search |
-| `sort` | `?sort=price,-rating` | Comma-separated, `-` = desc. Default: `createdAt` |
-| `select` | `?select=name,price` | Comma-separated fields to return |
+| Param            | Example                              | Description                                              |
+| ---------------- | ------------------------------------ | -------------------------------------------------------- |
+| `featured`       | `?featured=true`                     | Must be `true` or `false`, else 400                      |
+| `company`        | `?company=ikea`                      | One of `ikea`, `liddy`, `caressa`, `marcos`, else 400    |
+| `name`           | `?name=table`                        | Case-insensitive regex search                            |
+| `sort`           | `?sort=price,-rating`                | Comma-separated, `-` = desc. Default: `createdAt`        |
+| `select`         | `?select=name,price`                 | Comma-separated fields to return                         |
 | `numericFilters` | `?numericFilters=price>30,rating>=4` | Only `price` and `rating`; ops `>`, `>=`, `=`, `<`, `<=` |
-| `page` / `limit` | `?page=2&limit=5` | Pagination. Defaults: `page=1`, `limit=10` |
+| `page` / `limit` | `?page=2&limit=5`                    | Pagination. Defaults: `page=1`, `limit=10`               |
 
 Examples:
 
@@ -195,14 +195,14 @@ Error responses:
 
 Defined in `src/models/products.ts`:
 
-| Field | Type | Notes |
-|---|---|---|
-| `name` | String, required | e.g. `"accent chair"` |
-| `price` | Number, required | e.g. `25` |
-| `featured` | Boolean | default `false` |
-| `rating` | Number | default `4.5` |
-| `createdAt` | Date | default `Date.now()` |
-| `company` | String enum | `ikea \| liddy \| caressa \| marcos` |
+| Field       | Type             | Notes                                |
+| ----------- | ---------------- | ------------------------------------ |
+| `name`      | String, required | e.g. `"accent chair"`                |
+| `price`     | Number, required | e.g. `25`                            |
+| `featured`  | Boolean          | default `false`                      |
+| `rating`    | Number           | default `4.5`                        |
+| `createdAt` | Date             | default `Date.now()`                 |
+| `company`   | String enum      | `ikea \| liddy \| caressa \| marcos` |
 
 Collection name comes from `PRODUCTS_COLLECTION_NAME` (default `"products"`).
 
