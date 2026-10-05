@@ -4,14 +4,17 @@ import { COMPANIES } from "../types/product";
 import type { ProductFilter, Company } from "../types/product";
 
 const getAllProductsStatic = async (_req: Request, res: Response) => {
-  const products = await Product.find({}).sort("name");
+  const search = "wooden";
+  const products = await Product.find({
+    name: { $regex: search, $options: "i" },
+  }).sort("name -price");
   res
     .status(200)
     .json({ status: "success", products, nbHits: products.length });
 };
 
 const getAllProducts = async (req: Request, res: Response) => {
-  const { featured, company } = req.query;
+  const { featured, company, name } = req.query;
 
   if (featured && featured !== "true" && featured !== "false") {
     return res.status(400).json({
@@ -36,6 +39,10 @@ const getAllProducts = async (req: Request, res: Response) => {
   }
   if (company) {
     filter.company = company as Company;
+  }
+
+  if (name) {
+    filter.name = { $regex: name as string, $options: "i" };
   }
 
   const products = await Product.find(filter).sort("name");

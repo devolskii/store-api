@@ -4,7 +4,7 @@ export type Company = (typeof COMPANIES)[number];
 export type ProductFilter = {
   featured?: boolean;
   company?: Company;
-  name?: string;
+  name?: { $regex: string; $options: "i" };
   price?: number;
   rating?: number;
   createdAt?: Date;
